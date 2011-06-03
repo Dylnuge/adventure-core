@@ -30,7 +30,8 @@ class ShellInterface:
 	def __init__(self):
 		"""Initializes the shell interface.
 
-		Prints the initialization (welcome) message for the shell.
+		Loads shell builtins and prints the initialization (welcome)
+		message for the shell.
 		"""
 
 		print(self.shellname)
@@ -107,6 +108,12 @@ class ShellInterface:
 			raise KeyError("No such command")
 
 	def print_help(self, command="shell"):
+		"""Access the help system and print the requested help to the shell.
+
+		Arguments:
+		command - (default: shell) The command to get help on. If command is
+			'shell', prints help on all shell commands.
+		"""
 		if command == "shell":
 			print()
 			print(self.shellname)
