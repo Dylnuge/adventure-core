@@ -3,6 +3,8 @@
 # This software is licensed under the NCSA License. Details in LICENSE.txt
 # Copyright 2011 Dylan Nugent. All rights reserved.
 
+import textwrap
+
 # Declares whether debugging signals should be used within shell.py
 # For semantic reasons, a -O compile will override DEBUG to false
 DEBUG = True
@@ -14,11 +16,12 @@ class ShellInterface:
 	"""Class for a very simple shell interface."""
 
 	initmessage = """\
-Adventure Core Testing Shell
-Copyright (c) 2011 Dylan Nugent. All Rights Reserved.
-This program is licensed freely under the NCSA license.
-Source code is available, and a copy of the license should be included.
+		Adventure Core Testing Shell
+		Copyright (c) 2011 Dylan Nugent. All Rights Reserved.
+		This program is licensed freely under the NCSA license.
+		Source code is available, and a copy of the license should be included.
 	"""
+	initmessage = textwrap.dedent(initmessage)
 	prompt = "command> "
 	case_insensitive = True
 
@@ -41,12 +44,8 @@ Source code is available, and a copy of the license should be included.
 		"""
 		self.running = True
 
-		exit = False
-		while(not exit):
+		while(self.running):
 			command = self.get_command()
-			# TODO: Replace this with logic in process_command()
-			if(command == "quit"):
-				exit = True
 			self.process_command(command)
 
 	def get_command(self):
@@ -61,8 +60,10 @@ Source code is available, and a copy of the license should be included.
 		"""Process a command on the active shell
 		
 		Arguments:
-		command - The command to be processed"""
-		pass
+		command - The command to be processed
+		"""
+		if(command == "quit"):
+			self.running = False
 
 
 # For current testing purposes, allow the shell to be run directly
