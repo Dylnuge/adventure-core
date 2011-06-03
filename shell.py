@@ -15,8 +15,8 @@ class ShellInterface:
 
 	"""Class for a very simple shell interface."""
 
+	shellname = "Adventure Core Testing Shell ver. NaN"
 	initmessage = """\
-		Adventure Core Testing Shell
 		Copyright (c) 2011 Dylan Nugent. All Rights Reserved.
 		This program is licensed freely under the NCSA license.
 		Source code is available, and a copy of the license should be included.
@@ -25,6 +25,7 @@ class ShellInterface:
 	prompt = "command> "
 	case_insensitive = True
 	command_list = {}
+	alias_list = {}
 
 	def __init__(self):
 		"""Initializes the shell interface.
@@ -32,6 +33,7 @@ class ShellInterface:
 		Prints the initialization (welcome) message for the shell.
 		"""
 
+		print(self.shellname)
 		print(self.initmessage)
 		if DEBUG:
 			print("Debug mode is active. Bumpy road ahead.")
@@ -63,6 +65,8 @@ class ShellInterface:
 		self.command_list["help"] = "Display this help message"
 		self.command_list["quit"] = "Exit the shell"
 		self.command_list["load"] = "Load an Adventure Core game into the shell"
+		self.alias_list["q"] = "quit"
+		self.alias_list["exit"] = "quit"
 
 	def get_command(self):
 		"""Display a shell prompt and get the command from it"""
@@ -85,17 +89,35 @@ class ShellInterface:
 		# is to be treated as an argument to the command
 		command = linein.split()[0]
 		args = linein.split()[1:]
+		if(command in self.alias_list):
+			command = self.alias_list[command]
 
 		if(command in self.command_list):
 			# Process the command, currently manual
 			if(command == "help"):
-				print(self.command_list)
+				if args == []:
+					self.print_help()
+				else:
+					self.print_help(args[0])
 			elif(command == "quit"):
 				self.running = False
 			else:
 				raise NotImplementedError()
 		else:
 			raise KeyError("No such command")
+
+	def print_help(self, command="shell"):
+		if command == "shell":
+			print()
+			print(self.shellname)
+			print("Shell commands:")
+			for command in self.command_list:
+				print(command, ": ", self.command_list[command], sep="")
+			print()
+		elif command in self.command_list:
+			print(command, ": ", self.command_list[command], sep="")
+		else:
+			print("No help for that command")
 
 
 # For current testing purposes, allow the shell to be run directly
