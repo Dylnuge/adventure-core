@@ -3,4 +3,5 @@
 # Copyright 2011 Dylan Nugent. All rights reserved.
 
 class Game:
-	pass
+	def __init__(self, name="Sample Game"):
+		self.name = name

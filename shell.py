@@ -4,6 +4,7 @@
 # Copyright 2011 Dylan Nugent. All rights reserved.
 
 import textwrap
+from adventure.game import Game
 
 # Declares whether debugging signals should be used within shell.py
 # For semantic reasons, a -O compile will override DEBUG to false
@@ -68,6 +69,7 @@ class ShellInterface:
 		self.command_list["load"] = "Load an Adventure Core game into the shell"
 		self.alias_list["q"] = "quit"
 		self.alias_list["exit"] = "quit"
+		self.currgame = None
 
 	def get_command(self):
 		"""Display a shell prompt and get the command from it"""
@@ -102,6 +104,9 @@ class ShellInterface:
 					self.print_help(args[0])
 			elif(command == "quit"):
 				self.running = False
+			elif(command == "load"):
+				self.currgame = Game(name="My Game")
+				print("Loaded", self.currgame.name)
 			else:
 				raise NotImplementedError()
 		else:
