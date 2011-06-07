@@ -107,6 +107,7 @@ class ShellInterface:
 			elif(command == "load"):
 				self.currgame = Game(name="My Game")
 				print("Loaded", self.currgame.name)
+				print(self.currgame.display_room())
 			else:
 				raise NotImplementedError()
 		else:

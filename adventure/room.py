@@ -5,7 +5,7 @@
 class Room:
 	"""Simple room container.
 	
-	Persistent Variables:
+	Attributes:
 	title - The title of the room
 	desc - The description of the room
 	exits - A dictionary mapping exit names to linked rooms
@@ -20,7 +20,11 @@ class Room:
 		exits - (default empty) Dictionary mapping exit names to linked rooms
 		items - (default empty) List of items in the room
 		"""
+		# TODO: Fix untracked issue with exit room display
 		self.title = title
 		self.desc = desc
 		self.exits = exits
 		self.items = items
+
+	def __unicode__(self):
+		return self.title
